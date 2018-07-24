@@ -34,7 +34,6 @@ var Explorer = createReactClass({
                     title: item.title,
                     id: item.id,
                     onStateChange: function (d) {
-
                         var _w = this.state.windows;
                         for (var i = 0; i < _w.length; i++) {
                             if (d.data.id === _w[i].id) {
@@ -54,7 +53,7 @@ var Explorer = createReactClass({
 
                         }
                     }.bind(this)
-                }, "description")
+                }, item.component)
             );
         }.bind(this));
 
@@ -64,9 +63,3 @@ var Explorer = createReactClass({
         return e("div", null, this.renderWindows())
     }
 });
-
-var e = React.createElement,
-    explorer = ReactDOM.render(
-        React.createElement(Explorer),
-        document.getElementById('explorer')
-    );

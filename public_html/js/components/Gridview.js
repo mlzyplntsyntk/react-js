@@ -2,10 +2,11 @@ var Gridview = createReactClass({
   getInitialState: function() {
     return {
       columns: this.props.columns || {},
-      data: [],
+      data: this.props.data || [],
       keyField: this.props.keyField || "id",
-      selectedCell: "",
-      selectedRow: ""
+      selectedCellIndex: -1,
+      selectedRowIndex: -1,
+	  isBusy: false
     }
   },
 
@@ -37,7 +38,8 @@ var Gridview = createReactClass({
 
   cellClick: function(rowIndex, colIndex) {
     this.setState({
-      selectedCell: rowIndex + "_" + colIndex
+      selectedCellIndex: colIndex,
+	  selectedRowIndex: rowIndex
     });
   },
 
@@ -45,41 +47,53 @@ var Gridview = createReactClass({
     var _rows = [];
 
     this.state.data.map(function(item, rowIndex) {
-
       var _cells = [];
-
+	  
       this.state.columns.map(function(col, colIndex) {
-
+		  
+		  var _isSelected = this.state.selectedCellIndex === colIndex && this.state.selectedRowIndex === rowIndex;
         _cells.push(
           e("td", {
             key: colIndex,
-            onClick: this.cellClick.bind(this, rowIndex, colIndex)
-          }, this.state.selectedCell === rowIndex + "_" + colIndex ?
-              e(GridViewEditor, {
-                value: item[col],
-                change: function(value) {
+            onClick: this.cellClick.bind(this, rowIndex, colIndex),
+			className: _isSelected ? "selected": ""
+          }, _isSelected ?
+              e(GridviewEditor, {
+                value: item[col.name],
+                change: function(value, next) {
+					if (value !== "asd") {
+						this.cellClick(rowIndex, colIndex);
+						return;
+					}
                   var _data = this.state.data;
-                  _data[rowIndex][col] = value;
+                  _data[rowIndex][col.name] = value;
                   this.setState({data: _data});
+				  if (typeof next !== "undefined") {
+					  next.call();
+				  }
                 }.bind(this),
                 blur: function() {
-                  this.setState({ selectedCell: "" })
+                  this.cellClick(this.state.selectedRowIndex, -1);
                 }.bind(this),
                 moveNext: function() {
                   if (this.state.columns.length > colIndex + 1) {
                     this.cellClick(rowIndex, colIndex+1);
                   } else {
-                    this.setState({ selectedCell: "" })
+                    this.cellClick(this.state.selectedRowIndex, -1);
                   }
-                }.bind(this)
+                }.bind(this),
+				component: GridviewTextEditor
               }) :
-              e("span", null, item[col])
+              e("span", null, item[col.name].toString())
           )
         );
-
       }.bind(this));
 
-      var _row = e("tr", { key: rowIndex, ref: "row_" + rowIndex }, _cells);
+      var _row = e("tr", { 
+		  key: rowIndex, 
+		  ref: "row_" + rowIndex,
+		  className: this.state.selectedRowIndex === rowIndex ? "selected": ""
+	  }, _cells);
 
       _rows.push(_row);
 
@@ -88,10 +102,14 @@ var Gridview = createReactClass({
     return _rows;
   },
 
+  onCellValueChange: function() {
+	  
+  },
+
   getCols: function() {
     var _cols = [];
     this.state.columns.map(function(item, index) {
-      _cols.push(e("th", {key:index}, item));
+      _cols.push(e("th", {key:index}, item.displayName));
     }.bind(this));
     return e("tr", null, _cols);
   },

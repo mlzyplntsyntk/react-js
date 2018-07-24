@@ -1,1 +1,40 @@
-var _windowState = [{"id":"Company","title":"Company","x":20,"y":20,"w":100,"h":100},{"id":"Department","title":"Department","x":20,"y":20,"w":100,"h":100},{"id":"DepartmentUser","title":"DepartmentUser","x":20,"y":20,"w":100,"h":100},{"id":"User","title":"User","x":20,"y":20,"w":100,"h":100},{"id":"UserGroup","title":"UserGroup","x":20,"y":20,"w":100,"h":100},{"id":"DepartmentUserGroup","title":"DepartmentUserGroup","x":20,"y":20,"w":100,"h":100},{"id":"DepartmentUserPersona","title":"DepartmentUserPersona","x":20,"y":20,"w":100,"h":100},{"id":"Persona","title":"Persona","x":20,"y":20,"w":100,"h":100},{"id":"NotificationType","title":"NotificationType","x":20,"y":20,"w":100,"h":100},{"id":"NotifyLog","title":"NotifyLog","x":20,"y":20,"w":100,"h":100},{"id":"Paper","title":"Paper","x":20,"y":20,"w":100,"h":100},{"id":"PaperType","title":"PaperType","x":20,"y":20,"w":100,"h":100},{"id":"PaperStatus","title":"PaperStatus","x":20,"y":20,"w":100,"h":100},{"id":"PaperDetail","title":"PaperDetail","x":341,"y":206,"w":157,"h":220},{"id":"PaperAction","title":"PaperAction","x":539,"y":166,"w":100,"h":100},{"id":"PaperActionType","title":"PaperActionType","x":232,"y":23,"w":100,"h":100},{"id":"PaperDoc","title":"PaperDoc","x":142,"y":98,"w":100,"h":100},{"id":"PaperDraft","title":"PaperDraft","x":952,"y":243,"w":100,"h":100},{"id":"RelatedDepartment","title":"RelatedDepartment","x":183,"y":273,"w":100,"h":100},{"id":"TaskLog","title":"TaskLog","x":622,"y":41,"w":100,"h":100}];
+var windows = [{"id":"Company","title":"Company","x":20,"y":20,"w":300,"h":200}];
+
+var remote = {
+	models: [{
+		name: "Users",
+		columns: [{
+			name: "id",
+			displayName: "ID",
+			type: "int"
+		}, {
+			name: "name",
+			displayName: "Name",
+			type: "string"
+		}, {
+			name: "surname",
+			displayName: "Surname",
+			type: "string"
+		}, {
+			name: "birthday",
+			displayName: "Birthday",
+			type: "date"
+		}, {
+			name: "role",
+			displayName: "User Role",
+			type: "selection",
+			from: "Roles",
+			format: "{name}"
+		}]
+	}, {
+		name: "Roles",
+		columns: [{
+			name: "id",
+			type: "int"
+		},{
+			name: "name",
+			displayName: "Name",
+			type: "string"
+		}]
+	}]
+}

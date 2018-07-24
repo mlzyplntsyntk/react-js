@@ -16,3 +16,6 @@ table.gridview td input {
     margin: 0px;
     outline-style: none;
 }
+table.gridview tr.selected td {
+	background-color: rgba(0,0,0,0.2)
+}
