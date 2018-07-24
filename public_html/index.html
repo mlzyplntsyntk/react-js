@@ -1,0 +1,57 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Srb</title>
+    <link rel="stylesheet" href="/css/app.css" />
+    <link rel="stylesheet" href="/css/gridview.css" />
+  </head>
+  <body>
+
+    <div id="explorer">
+    </div>
+    <div id="gridtest">
+
+    </div>
+    <script src="/js/react/react.development.js"></script>
+    <script src="/js/react/react-dom.development.js"></script>
+    <script src="/js/react/create-react-class.min.js"></script>
+    <script src="/js/components/Explorer.js"></script>
+    <script src="/js/components/ExpWindow.js"></script>
+    <script src="/js/components/GridView.js"></script>
+    <script src="/js/components/GridViewEditor.js"></script>
+    <script src="/js/app/data.js"></script>
+    <script type="text/javascript">
+    var e = React.createElement,
+        explorer = ReactDOM.render(
+            e(Explorer),
+            document.getElementById('explorer')
+        );
+    setTimeout(function() {
+      _windowState.forEach(function (s) {
+        explorer.addWindow(s);
+      })
+    }, 1000);
+
+    var columns = [
+      { name: "a", sortOrder:1, editor: GridViewEditor, width: 100 }
+    ];
+
+    var _grid = ReactDOM.render(
+        e(Gridview, {
+          columns: ["a", "b", "c"],
+          keyField: "a"
+        }),
+        document.getElementById('gridtest')
+    );
+    _grid.setData([
+      {a: 1, b: 2, c: 3}
+    ]);
+    _grid.addRow({a:2, b: 3, c: 5});
+    
+    setTimeout(function() {
+      //_grid.removeRow({a:1})
+    }, 1000);
+
+    </script>
+  </body>
+</html>

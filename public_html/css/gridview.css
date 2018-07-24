@@ -1,0 +1,18 @@
+table.gridview {
+  border-left:1px solid #ccc;
+  border-top:1px solid #ccc;
+}
+table.gridview td,
+table.gridview th {
+  background:#f2f2f2;
+  width:100px;
+  height:25px;
+  border-right:1px solid #ccc;
+  border-bottom:1px solid #ccc;
+}
+table.gridview td input {
+  width:100%;
+     box-sizing: border-box;
+    margin: 0px;
+    outline-style: none;
+}
